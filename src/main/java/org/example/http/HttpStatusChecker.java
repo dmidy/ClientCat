@@ -17,7 +17,7 @@ public class HttpStatusChecker {
             connection.disconnect();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                return String.valueOf(link);
+                return link;
             } else {
                 return null;
             }
