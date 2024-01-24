@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 
 public class HttpStatusImageDownloader {
-
     public void downloadStatusImage(int code) throws Exception {
         HttpStatusChecker httpStatusChecker = new HttpStatusChecker();
 
