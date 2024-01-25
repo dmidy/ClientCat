@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpStatusChecker {
-    public String getStatusImage(int code){
+    public String getStatusImage(int code) throws Exception {
         String link = "https://http.cat/" + code + ".jpg";
 
         try {
@@ -19,10 +19,10 @@ public class HttpStatusChecker {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 return link;
             } else {
-                return null;
+                throw new Exception("Image not found for HTTP status code " + code);
             }
         } catch (Exception e) {
-            return null;
+            throw new Exception("Error connecting to the server", e);
         }
     }
 }

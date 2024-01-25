@@ -1,12 +1,10 @@
 package org.example.http;
 
-import java.net.HttpURLConnection;
 import java.util.Scanner;
 
 public class HttpImageStatusCli {
     public void askStatus() {
         HttpStatusImageDownloader httpStatusImageDownloader = new HttpStatusImageDownloader();
-        HttpStatusChecker httpStatusChecker = new HttpStatusChecker();
         Scanner scanner = new Scanner(System.in);
 
         int code = 0;
@@ -17,21 +15,17 @@ public class HttpImageStatusCli {
             if (scanner.hasNextInt()) {
                 code = scanner.nextInt();
                 try {
-                    String imageUrl = httpStatusChecker.getStatusImage(code);
-
-                    if (imageUrl != null) {
-                        httpStatusImageDownloader.downloadStatusImage(code);
-                        break;
-                    } else {
-                        System.out.println("There is not image for HTTP status " + code);
-                    }
+                    httpStatusImageDownloader.downloadStatusImage(code);
+                    System.out.println("Image downloaded successfully!");
+                    break;
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    System.out.println("There is not image for HTTP status " + code);
                 }
             } else {
                 System.out.println("Please enter a valid number.");
                 scanner.next();
             }
         }
+        scanner.close();
     }
 }

@@ -31,10 +31,9 @@ public class HttpStatusImageDownloader {
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
-                response.getStatusLine().getStatusCode();
+                int statusCode = response.getStatusLine().getStatusCode();
 
-                if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
-
+                if (statusCode == HttpURLConnection.HTTP_OK) {
                     Path saveDir = FileSystems.getDefault().getPath(saveDirPath);
                     if (!Files.exists(saveDir)) {
                         Files.createDirectory(saveDir);
@@ -44,9 +43,10 @@ public class HttpStatusImageDownloader {
 
                     ImageIO.write(image, "jpg", destination.toFile());
                 } else {
-                    throw new Exception();
+                    throw new Exception("Image not found for HTTP status code " + code);
                 }
-            } catch (IOException ignored) {
+            } catch (IOException e) {
+                throw new Exception("Error downloading image for HTTP status code " + code, e);
             }
         }
     }
